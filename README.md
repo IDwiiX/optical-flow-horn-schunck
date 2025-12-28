@@ -1,24 +1,27 @@
 # Optical Flow Estimation using the Horn–Schunck Method
 
 ## Overview
-This project implements the Horn–Schunck variational optical flow algorithm for motion estimation in image sequences.
+This project implements the Horn–Schunck variational optical flow algorithm to estimate dense motion fields between two consecutive grayscale images.
 
 ## Method
-- Brightness constancy constraint
-- Global smoothness regularization
-- Iterative optimization of flow fields
+- Spatial and temporal image derivatives computed using finite-difference convolution kernels
+- Gaussian smoothing applied to reduce noise prior to optimization
+- Iterative optimization of the Horn–Schunck energy functional with global smoothness regularization
+- Flow updates computed until convergence based on the L2 norm of successive updates
 
-## Experiments
-- Tested on synthetic and real image sequences
-- Analysis of sensitivity to noise and regularization parameters
-- Evaluation of smoothness–accuracy trade-offs
+## Implementation Details
+- Image gradients: Ix, Iy, It via convolution
+- Regularization parameter α controls smoothness
+- Convergence based on update norm threshold or maximum iterations
+- Average-neighborhood smoothing applied to flow fields at each iteration
 
-## Key Observations
-- Strong regularization improves smoothness but reduces motion detail
-- Noise significantly affects flow accuracy without proper smoothing
+## Visualization
+- Optical flow vectors visualized using quiver plots
+- Only vectors with magnitude above the global average are displayed to highlight significant motion
 
 ## Technologies
-Python, NumPy, OpenCV
+Python, NumPy, OpenCV, SciPy, Matplotlib
 
-## Purpose
-The project explores foundational techniques in computer vision and variational optimization.
+## Usage
+```bash
+python horn_schunck.py image1.png image2.png
